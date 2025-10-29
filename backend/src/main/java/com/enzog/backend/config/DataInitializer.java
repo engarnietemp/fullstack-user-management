@@ -22,14 +22,21 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        if (userTypeRepository.count() > 0) {
-            System.out.println("✅ Database already initialized, skipping data insertion");
+        
+    	// Database reset at each run if necessary
+    	
+    	// userRepository.deleteAll();
+    	// userTypeRepository.deleteAll();
+  
+    	if (userTypeRepository.count() > 0) {
+            System.out.println("Database already initialized, skipping data insertion");
             return;
         }
 
-        System.out.println("🔄 Initializing database with test data...");
-
+        System.out.println("Initializing database with test data...");
+        
         /* ========== CREATION OF USER TYPES ========== */
+        
         UserType adminType = new UserType();
         adminType.setLabel("Administrator");
         adminType = userTypeRepository.save(adminType);
@@ -42,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
         managerType.setLabel("Manager");
         managerType = userTypeRepository.save(managerType);
 
-        System.out.println("✅ Created 3 UserTypes");
+        System.out.println("Created 3 UserTypes");
 
         
         
@@ -82,7 +89,7 @@ public class DataInitializer implements CommandLineRunner {
         user5.setUserType(adminType);
         userRepository.save(user5);
 
-        System.out.println("✅ Created 5 Users");
-        System.out.println("🎉 Database initialization complete!");
+        System.out.println("Created 5 Users");
+        System.out.println("Database initialization complete!");
     }
 }
