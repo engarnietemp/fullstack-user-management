@@ -1,0 +1,63 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Type User List</h1>
+  </div>
+
+  <div class="page-content">
+    <div class="text-center mb-4">
+      <button class="btn btn-add" routerLink="/user-types/new">
+        Add a user type
+      </button>
+    </div>
+
+    @if (loading) {
+      <div class="text-center">
+        <div class="spinner-border" role="status"></div>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    @if (!loading && !errorMessage && userTypes.length > 0) {
+      <table class="data-table">
+      <thead>
+        <tr>
+          <th (click)="sortById()" style="cursor: pointer;">
+            ID {{ sortDirection === 'asc' ? '▲' : '▼' }}
+          </th>
+          <th>Type User</th>
+          <th></th>
+        </tr>
+      </thead>
+        <tbody>
+          @for (userType of userTypes; track userType.id) {
+            <tr>
+              <td>{{ userType.id }}</td>
+              <td>{{ userType.label }}</td>
+              <td class="actions">
+                <button 
+                  class="btn btn-edit" 
+                  [routerLink]="['/user-types', userType.id]">
+                  Edit
+                </button>
+                <button 
+                  class="btn btn-remove" 
+                  (click)="deleteUserType(userType.id!)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+    @if (!loading && userTypes.length === 0) {
+      <div class="alert alert-info text-center">
+        No User Type found.
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ isEditMode ? 'Edit' : 'Add' }} / Edit a user</h2>
+    </div>
+
+    <div class="card-body">
+      @if (loading) {
+        <div class="text-center">
+          <div class="spinner-border" role="status"></div>
+        </div>
+      } @else {
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+              [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+            />
+            @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+              <div class="invalid-feedback">
+                name is mandatory.
+              </div>
+            }
+          </div>
+
+          <!-- First name -->
+          <div class="mb-3">
+            <label for="firstname" class="form-label">First name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstname"
+              formControlName="firstname"
+              [class.is-invalid]="userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched"
+            />
+            @if (userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched) {
+              <div class="invalid-feedback">
+                firstname is mandatory.
+              </div>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+            />
+            @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+              <div class="invalid-feedback">
+                @if (userForm.get('email')?.errors?.['required']) {
+                  email is mandatory.
+                }
+                @if (userForm.get('email')?.errors?.['email']) {
+                  Invalid email format.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Type user (dropdown) -->
+          <div class="mb-3">
+            <label for="userTypeId" class="form-label">Type user</label>
+            <select
+              class="form-select"
+              id="userTypeId"
+              formControlName="userTypeId"
+              [class.is-invalid]="userForm.get('userTypeId')?.invalid && userForm.get('userTypeId')?.touched"
+            >
+              <option [value]="null" disabled selected>Select a type</option>
+              @for (userType of userTypes; track userType.id) {
+                <option [value]="userType.id">{{ userType.label }}</option>
+              }
+            </select>
+            @if (userForm.get('userTypeId')?.invalid && userForm.get('userTypeId')?.touched) {
+              <div class="invalid-feedback">
+                UserType is mandatory
+              </div>
+            }
+          </div>
+
+          <!-- Button -->
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="loading">
+              {{ isEditMode ? 'Update' : 'Create' }}
+            </button>
+            <button type="button" class="btn btn-secondary" routerLink="/users">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      }
+    </div>
+  </div>
+</div>

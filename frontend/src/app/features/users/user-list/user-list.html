@@ -1,0 +1,67 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>User List</h1>
+  </div>
+
+  <div class="page-content">
+    <div class="text-center mb-4">
+      <button class="btn btn-add" routerLink="/users/new">
+        Add User
+      </button>
+    </div>
+
+    @if (loading) {
+      <div class="text-center">
+        <div class="spinner-border" role="status"></div>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    @if (!loading && !errorMessage && users.length > 0) {
+      <table class="data-table">
+      <thead>
+        <tr>
+          <th (click)="sortByType()" style="cursor: pointer;">
+            Type User {{ sortDirection === 'asc' ? '▲' : '▼' }}
+          </th>
+          <th>Name</th>
+          <th>First name</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+        <tbody>
+          @for (user of users; track user.id) {
+            <tr>
+              <td>{{ user.userType.label }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.firstname }}</td>
+              <td>{{ user.email }}</td>
+              <td class="actions">
+                <button 
+                  class="btn btn-edit" 
+                  [routerLink]="['/users', user.id]">
+                  Edit
+                </button>
+                <button 
+                  class="btn btn-remove" 
+                  (click)="deleteUser(user.id!)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+    @if (!loading && users.length === 0) {
+      <div class="alert alert-info text-center">
+        No Users found.
+      </div>
+    }
+  </div>
+</div>

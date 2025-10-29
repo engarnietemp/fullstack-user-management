@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Add / Edit an user</h2>
+    </div>
+
+    <div class="card-body">
+      @if (loading) {
+        <div class="text-center">
+          <div class="spinner-border" role="status"></div>
+        </div>
+      } @else {
+        <form [formGroup]="userTypeForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="label" class="form-label">Type user</label>
+            <input
+              type="text"
+              class="form-control"
+              id="label"
+              formControlName="label"
+              placeholder="Enter user type"
+              [class.is-invalid]="userTypeForm.get('label')?.invalid && userTypeForm.get('label')?.touched"
+            />
+            @if (userTypeForm.get('label')?.invalid && userTypeForm.get('label')?.touched) {
+              <div class="invalid-feedback">
+                The field Label is mandatory.
+              </div>
+            }
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="loading">
+              {{ isEditMode ? 'Update' : 'Create' }}
+            </button>
+            <button type="button" class="btn btn-secondary" routerLink="/user-types">
+              Cancel
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+</div>
