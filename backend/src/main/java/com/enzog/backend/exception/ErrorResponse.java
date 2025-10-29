@@ -15,7 +15,7 @@ public class ErrorResponse {
         this.timestamp = timestamp;
     }
     
-    // Getters et Setters
+    // Getters & Setters
     public int getStatus() {
         return status;
     }

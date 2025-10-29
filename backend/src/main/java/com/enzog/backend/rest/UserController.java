@@ -59,7 +59,6 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(dbUser);
 	}
 	
-	/* TODO : PUT sur /api/users renvoie une erreur 500. Etonnant vu que normalement j'ai configuré pour que justement il refuse l'opération en précisant que la route n'est pas disponible */
 	@PutMapping("/{userId}")
 	public ResponseEntity<User> updateUser(@PathVariable Long userId,@Valid @RequestBody User user) {
 	    
@@ -67,8 +66,6 @@ public class UserController {
 	    return ResponseEntity.ok(dbUser);
 	}	
 	
-	/* TODO : Si l'email existe déjà je le renvoie ici. Faut changer pour la cohérence 
-	 * Erreur 500 si les champs sont pas valide à cause du patchPayload. On pourrait vérifier le User après l'avoir patch en appelant le Validator sur les champs */
 	@PatchMapping("/{userId}")
 	public ResponseEntity<User> updateUserFields(@PathVariable Long userId, @RequestBody Map<String, Object> patchPayload) {
 		

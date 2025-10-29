@@ -21,7 +21,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Ne réinsérer que si la base est vide
+
         if (userTypeRepository.count() > 0) {
             System.out.println("✅ Database already initialized, skipping data insertion");
             return;
@@ -29,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("🔄 Initializing database with test data...");
 
-        // Créer les types d'utilisateurs
+        /* ========== CREATION OF USER TYPES ========== */
         UserType adminType = new UserType();
         adminType.setLabel("Administrator");
         adminType = userTypeRepository.save(adminType);
@@ -46,7 +46,7 @@ public class DataInitializer implements CommandLineRunner {
 
         
         
-        // Créer des utilisateurs de test
+        /* ========== CREATION OF USERS ========== */
         User user1 = new User();
         user1.setName("Dupont");
         user1.setFirstname("Jean");
